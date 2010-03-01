@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require File.expand_path(File.dirname(__FILE__) + "/../lib/seo_checker")
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: seo_checker website_url"
+  
+  opts.parse!
+end
+
+checker = SEOChecker.new(ARGV[0])
+checker.check
