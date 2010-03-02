@@ -7,8 +7,16 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: seo_checker website_url"
   
+  opts.on('-b', '--batch BATCH_SIZE', 'http get batch size') do |batch|
+    options[:batch_size] = batch
+  end
+
+  opts.on('-i', '--interval INTERVAL_TIME', 'http get interval time') do |interval|
+    options[:interval_time] = interval
+  end
+
   opts.parse!
 end
 
-checker = SEOChecker.new(ARGV[0])
+checker = SEOChecker.new(ARGV[0], options)
 checker.check

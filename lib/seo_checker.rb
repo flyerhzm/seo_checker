@@ -1,3 +1,4 @@
+require 'enumerator'
 require 'net/http'
 require 'uri'
 
@@ -5,12 +6,14 @@ class SEOException < Exception
 end
 
 class SEOChecker
-  def initialize(url)
+  def initialize(url, options={})
     @url = url
     @locations = []
     @titles = {}
     @descriptions = {}
     @errors = []
+    @batch_size = options[:batch_size].to_i
+    @interval_time = options[:interval_time].to_i || 0
   end
 
   def check
@@ -37,15 +40,19 @@ class SEOChecker
   end
 
   def check_location
-    @locations.each do |location|
-      response = get_response(URI.parse(location))
-      if response.is_a? Net::HTTPSuccess
-        check_title(response, location)
-        check_description(response, location)
-        check_url(location)
-      else
-        @errors << "The page is unreachable #{location}."
+    @batch_size ||= @locations.size
+    @locations.each_slice(@batch_size) do |batch_locations|
+      batch_locations.each do |location|
+        response = get_response(URI.parse(location))
+        if response.is_a? Net::HTTPSuccess
+          check_title(response, location)
+          check_description(response, location)
+          check_url(location)
+        else
+          @errors << "The page is unreachable #{location}."
+        end
       end
+      sleep(@interval_time)
     end
   end
 
