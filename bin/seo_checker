@@ -5,7 +5,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/seo_checker")
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: seo_checker website_url"
+  opts.banner = "Usage: seo_checker [OPTIONS] website_url"
   
   opts.on('-b', '--batch BATCH_SIZE', 'http get batch size') do |batch|
     options[:batch_size] = batch
@@ -13,6 +13,11 @@ OptionParser.new do |opts|
 
   opts.on('-i', '--interval INTERVAL_TIME', 'http get interval time') do |interval|
     options[:interval_time] = interval
+  end
+
+  opts.on_tail('-h', '--help', 'Show this message') do
+    puts opts
+    exit
   end
 
   opts.parse!
