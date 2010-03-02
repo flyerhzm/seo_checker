@@ -7,6 +7,7 @@ Check your website if it is seo.
 - use sitemap file
 - use unique title tags for each page
 - ues unique descriptions for each page
+- url does not just use ID number.
 - url does not use excessive keywords
 - url does not have deep nesting of subdirectories
 
