@@ -1,6 +1,6 @@
 # SEOChecker
 
-Check your website if it is seo
+Check your website if it is seo.
 
 ## Checklists
 
