@@ -7,11 +7,11 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: seo_checker [OPTIONS] website_url"
   
-  opts.on('-b', '--batch BATCH_SIZE', 'http get batch size') do |batch|
+  opts.on('-b', '--batch BATCH_SIZE', 'get a batch size of pages') do |batch|
     options[:batch_size] = batch
   end
 
-  opts.on('-i', '--interval INTERVAL_TIME', 'http get interval time') do |interval|
+  opts.on('-i', '--interval INTERVAL_TIME', 'interval time between two batches') do |interval|
     options[:interval_time] = interval
   end
 
