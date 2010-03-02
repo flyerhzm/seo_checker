@@ -59,12 +59,12 @@ class SEOChecker
   def report
     @titles.each do |title, locations|
       if locations.size > 1
-        @errors << "#{locations.join(', ')} have the same title #{title}."
+        @errors << "#{locations.slice(0, 5).join(', ')} #{'and ...' if locations.size > 5} have the same title '#{title}'."
       end
     end
     @descriptions.each do |description, locations|
       if locations.size > 1
-        @errors << "#{locations.join(', ')} have the same description #{description}."
+        @errors << "#{locations.slice(0, 5).join(', ')} #{'and ...' if locations.size > 5} have the same description '#{description}'."
       end
     end
     puts @errors.join("\n")
@@ -89,7 +89,7 @@ class SEOChecker
 
     def check_description(response, location)
       if response.body =~ %r{<meta\s+name=["']description["']\s+content=["'](.*?)["']\s*/>|<meta\s+content=["'](.*?)["']\s+name=["']description["']\s*/>}
-        description = $1
+        description = $1 || $2
       else
         @errors << "#{location} has no description."
       end
