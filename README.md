@@ -5,11 +5,18 @@ Check your website if it is seo.
 ## Checklists
 
 - use sitemap file
+- each page are reachable
+- each page has title
 - use unique title tags for each page
+- each page has meta description
 - ues unique descriptions for each page
 - url does not just use ID number.
 - url does not use excessive keywords
 - url does not have deep nesting of subdirectories
+
+## Install
+
+<code>sudo gem install seo_checker</code>
 
 ## Usage
 
@@ -25,3 +32,8 @@ Usage: seo_checker [OPTIONS] website_url
     -h, --help                       Show this message
 </code></pre>
 
+For example:
+
+<pre><code>seo_checker http://localhost:3000</code></pre>
+
+<pre><code>seo_checker http://yoursite.com -b 10 -i 1</code></pre>
