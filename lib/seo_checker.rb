@@ -75,7 +75,7 @@ class SEOChecker
     end
 
     def check_title(header_string, location)
-      if header_string =~ %r{<title>(.*?)</title>}
+      if header_string =~ %r{<title>(.*?)</title>} && $1 != ''
         title = $1
         (@titles[title] ||= []) << location
       else
@@ -106,33 +106,27 @@ class SEOChecker
     end
 
     def report
-      unless @unreachables.empty?
-        print "#{@unreachables.slice(0, 5).join(",\n")} #{'and ...' if @unreachables.size > 5} are unreachable.\n\n"
-      end
-      unless @no_titles.empty?
-        print "#{@no_titles.slice(0, 5).join(",\n")} #{'and ...' if @no_titles.size > 5} have no title.\n\n"
-      end
-      unless @no_descriptions.empty?
-        print "#{@no_descriptions.slice(0, 5).join(",\n")} #{'and ...' if @no_descriptions.size > 5} have no description.\n\n"
-      end
-      @titles.each do |title, locations|
+      report_non_empty(@unreachables, "are unreachable.")
+      report_non_empty(@no_titles, "have no title.")
+      report_non_empty(@no_descriptions, "have no description.")
+      report_same(@titles, 'title')
+      report_same(@descriptions, 'description')
+      report_non_empty(@id_urls.values, "use ID number in URL.")
+      report_non_empty(@excessive_keywords, "use excessive keywords in URL.")
+      report_non_empty(@nesting_subdirectories, "have deep nesting of subdirectories in URL.")
+    end
+
+    def report_same(variables, name)
+      variables.each do |variable, locations|
         if locations.size > 1
-          print "#{locations.slice(0, 5).join(",\n")} #{'and ...' if locations.size > 5} have the same title '#{title}'.\n\n"
+          print "#{locations.slice(0, 5).join(",\n")} #{'and ...' if locations.size > 5} have the same #{name} '#{variable}'.\n\n"
         end
       end
-      @descriptions.each do |description, locations|
-        if locations.size > 1
-          print "#{locations.slice(0, 5).join(",\n")} #{'and ...' if locations.size > 5} have the same description '#{description}'.\n\n"
-        end
-      end
-      unless @id_urls.empty?
-        print "#{@id_urls.values.slice(0, 5).join(",\n")} #{'and ...' if @id_urls.values.size > 5} use ID number in URL.\n\n"
-      end
-      unless @excessive_keywords.empty?
-        print "#{@excessive_keywords.slice(0, 5).join(",\n")} #{'and ...' if @excessive_keywords.size > 5} use excessive keywords in URL.\n\n"
-      end
-      unless @nesting_subdirectories.empty?
-        print "#{@nesting_subdirectories.slice(0, 5).join(",\n")} #{'and ...' if @nesting_subdirectories.size > 5} have deep nesting of subdirectories in URL.\n\n"
+    end
+
+    def report_non_empty(variables, suffix)
+      unless variables.empty?
+        print "#{variables.slice(0, 5).join(",\n")} #{'and ...' if variables.size > 5} #{suffix}\n\n"
       end
     end
 end
