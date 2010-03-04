@@ -15,6 +15,10 @@ OptionParser.new do |opts|
     options[:interval_time] = interval
   end
 
+  opts.on('--debug') do
+    options[:logger] = true
+  end
+
   opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit

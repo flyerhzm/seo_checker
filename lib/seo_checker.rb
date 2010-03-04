@@ -1,4 +1,5 @@
 require 'enumerator'
+require 'logger'
 require 'net/http'
 require 'uri'
 
@@ -19,6 +20,7 @@ class SEOChecker
     @unreachables = []
     @batch_size = options[:batch_size] ? options[:batch_size].to_i : nil
     @interval_time = options[:interval_time].to_i
+    @logger = options[:logger] == true ? Logger.new(STDOUT) : options[:logger]
   end
 
   def check
@@ -34,6 +36,7 @@ class SEOChecker
 
   def check_sitemap
     #TODO: allow manual sitemap file
+    @logger.debug "checking sitemap file" if @logger
     uri = URI.parse(@url)
     uri.path = '/sitemap.xml'
     response = get_response(uri)
@@ -48,6 +51,7 @@ class SEOChecker
     @batch_size ||= @locations.size
     @locations.each_slice(@batch_size) do |batch_locations|
       batch_locations.each do |location|
+        @logger.debug "checking #{location}" if @logger
         response = get_response(URI.parse(location))
         if response.is_a? Net::HTTPSuccess
           if response.body =~ %r{<head>(.*?)</head>}m

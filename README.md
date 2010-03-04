@@ -29,6 +29,7 @@ It is strongly recommand to check seo in development environment. If you want to
 Usage: seo_checker [OPTIONS] website_url
     -b, --batch BATCH_SIZE           get a batch size of pages
     -i, --interval INTERVAL_TIME     interval time between two batches
+        --debug
     -h, --help                       Show this message
 </code></pre>
 
@@ -36,4 +37,4 @@ For example:
 
 <pre><code>seo_checker http://localhost:3000</code></pre>
 
-<pre><code>seo_checker http://yoursite.com -b 10 -i 1</code></pre>
+<pre><code>seo_checker http://yoursite.com --debug -b 10 -i 1</code></pre>
