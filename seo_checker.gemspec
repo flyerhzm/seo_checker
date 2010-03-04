@@ -27,32 +27,32 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/flyerhzm/seo_checker}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{seo_checker check your website if it is seo.}
   s.test_files = [
-    "examples/bad_seo/app/controllers/application_controller.rb",
-     "examples/bad_seo/app/controllers/posts_controller.rb",
+    "examples/bad_seo/config/routes.rb",
+     "examples/bad_seo/config/initializers/backtrace_silencers.rb",
+     "examples/bad_seo/config/initializers/new_rails_defaults.rb",
+     "examples/bad_seo/config/initializers/session_store.rb",
+     "examples/bad_seo/config/initializers/inflections.rb",
+     "examples/bad_seo/config/initializers/mime_types.rb",
+     "examples/bad_seo/config/environment.rb",
+     "examples/bad_seo/config/boot.rb",
+     "examples/bad_seo/config/environments/production.rb",
+     "examples/bad_seo/config/environments/development.rb",
+     "examples/bad_seo/test/test_helper.rb",
+     "examples/bad_seo/test/performance/browsing_test.rb",
+     "examples/bad_seo/test/functional/posts_controller_test.rb",
+     "examples/bad_seo/test/unit/helpers/posts_helper_test.rb",
+     "examples/bad_seo/test/unit/post_test.rb",
+     "examples/bad_seo/db/migrate/20100228140057_create_posts.rb",
+     "examples/bad_seo/db/seeds.rb",
+     "examples/bad_seo/db/schema.rb",
      "examples/bad_seo/app/helpers/application_helper.rb",
      "examples/bad_seo/app/helpers/posts_helper.rb",
      "examples/bad_seo/app/models/post.rb",
-     "examples/bad_seo/config/boot.rb",
-     "examples/bad_seo/config/environment.rb",
-     "examples/bad_seo/config/environments/development.rb",
-     "examples/bad_seo/config/environments/production.rb",
-     "examples/bad_seo/config/initializers/backtrace_silencers.rb",
-     "examples/bad_seo/config/initializers/inflections.rb",
-     "examples/bad_seo/config/initializers/mime_types.rb",
-     "examples/bad_seo/config/initializers/new_rails_defaults.rb",
-     "examples/bad_seo/config/initializers/session_store.rb",
-     "examples/bad_seo/config/routes.rb",
-     "examples/bad_seo/db/migrate/20100228140057_create_posts.rb",
-     "examples/bad_seo/db/schema.rb",
-     "examples/bad_seo/db/seeds.rb",
-     "examples/bad_seo/test/functional/posts_controller_test.rb",
-     "examples/bad_seo/test/performance/browsing_test.rb",
-     "examples/bad_seo/test/test_helper.rb",
-     "examples/bad_seo/test/unit/helpers/posts_helper_test.rb",
-     "examples/bad_seo/test/unit/post_test.rb"
+     "examples/bad_seo/app/controllers/application_controller.rb",
+     "examples/bad_seo/app/controllers/posts_controller.rb"
   ]
 
   if s.respond_to? :specification_version then
