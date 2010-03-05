@@ -23,7 +23,7 @@ Check your website if it is seo.
 It is easy to use, just one line.
 <code>seo_checker http://example.com/</code>
 
-It is strongly recommand to check seo in development environment. If you want to test in production environment, you can use option <code>--batch</code> and <code>--interval</code> to make sure it does not get too crowded.
+It is strongly recommand to check seo in development environment. If you want to test in production environment, you can use option <code>--batch</code> and <code>--interval</code> to make sure it does not get too crowded, and use <code>--debug</code> to see the page crawling.
 
 <pre><code>
 Usage: seo_checker [OPTIONS] website_url
