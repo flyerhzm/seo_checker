@@ -1,5 +1,7 @@
 require 'enumerator'
 require 'logger'
+require 'zlib'
+require 'stringio'
 require 'net/http'
 require 'uri'
 
@@ -36,14 +38,30 @@ class SEOChecker
 
   def check_sitemap
     #TODO: allow manual sitemap file
-    @logger.debug "checking sitemap file" if @logger
+    check_plain_sitemap
+    check_gzip_sitemap if @locations.empty?
+
+    raise SEOException, "Error: There is no sitemap.xml or sitemap.xml.gz" if @locations.empty?
+  end
+
+  def check_plain_sitemap
+    @logger.debug "checking sitemap.xml file" if @logger
     uri = URI.parse(@url)
     uri.path = '/sitemap.xml'
     response = get_response(uri)
     if response.is_a? Net::HTTPSuccess
       @locations = response.body.scan(%r{<loc>(.*?)</loc>}).flatten
-    else
-      raise SEOException, "Error: There is no sitemap.xml."
+    end
+  end
+
+  def check_gzip_sitemap
+    @logger.debug "checking sitemap.xml.gz file" if @logger
+    uri = URI.parse(@url)
+    uri.path = '/sitemap.xml.gz'
+    response = get_response(uri)
+    if response.is_a? Net::HTTPSuccess
+      body_io = StringIO.new(response.body)
+      @locations = Zlib::GzipReader.new(body_io).read.scan(%r{<loc>(.*?)</loc>}).flatten
     end
   end
 
