@@ -27,7 +27,11 @@ class SEOChecker
 
   def check
     begin
-      check_sitemap
+      check_robot
+      check_sitemap("#{@url}/sitemap.xml") if @locations.empty?
+      check_sitemap("#{@url}/sitemap.xml.gz") if @locations.empty?
+      raise SEOException, "Error: There is no sitemap.xml or sitemap.xml.gz" if @locations.empty?
+
       check_location
 
       report
@@ -36,32 +40,27 @@ class SEOChecker
     end
   end
 
-  def check_sitemap
-    #TODO: allow manual sitemap file
-    check_plain_sitemap
-    check_gzip_sitemap if @locations.empty?
-
-    raise SEOException, "Error: There is no sitemap.xml or sitemap.xml.gz" if @locations.empty?
-  end
-
-  def check_plain_sitemap
-    @logger.debug "checking sitemap.xml file" if @logger
+  def check_robot
     uri = URI.parse(@url)
-    uri.path = '/sitemap.xml'
+    uri.path = '/robots.txt'
     response = get_response(uri)
-    if response.is_a? Net::HTTPSuccess
-      @locations = response.body.scan(%r{<loc>(.*?)</loc>}).flatten
+    if response.is_a? Net::HTTPSuccess and response.body =~ /Sitemap:\s*(.*)/
+      check_sitemap($1)
     end
   end
 
-  def check_gzip_sitemap
-    @logger.debug "checking sitemap.xml.gz file" if @logger
-    uri = URI.parse(@url)
-    uri.path = '/sitemap.xml.gz'
+  def check_sitemap(url)
+    @logger.debug "checking #{url} file" if @logger
+    uri = URI.parse(url)
     response = get_response(uri)
     if response.is_a? Net::HTTPSuccess
-      body_io = StringIO.new(response.body)
-      @locations = Zlib::GzipReader.new(body_io).read.scan(%r{<loc>(.*?)</loc>}).flatten
+      body = url =~ /gz$/ ? Zlib::GzipReader.new(StringIO.new(response.body)).read : response.body
+      if body.index "<sitemap>"
+        sitemap_locs = body.scan(%r{<loc>(.*?)</loc>}).flatten
+        sitemap_locs.each { |loc| check_sitemap(loc) }
+      else
+        @locations = body.scan(%r{<loc>(.*?)</loc>}).flatten
+      end
     end
   end
 
