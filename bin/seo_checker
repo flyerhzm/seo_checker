@@ -4,9 +4,9 @@ require 'optparse'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/seo_checker")
 
 options = {}
-OptionParser.new do |opts|
+opts = OptionParser.new do |opts|
   opts.banner = "Usage: seo_checker [OPTIONS] website_url"
-  
+
   opts.on('-b', '--batch BATCH_SIZE', 'get a batch size of pages') do |batch|
     options[:batch_size] = batch
   end
@@ -25,6 +25,11 @@ OptionParser.new do |opts|
   end
 
   opts.parse!
+end
+
+if ARGV.empty?
+  puts opts.help
+  exit
 end
 
 checker = SEOChecker.new(ARGV[0], options)
