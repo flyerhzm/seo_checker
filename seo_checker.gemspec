@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{seo_checker}
-  s.version = "0.2.3"
+  s.version = "0.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Richard Huang"]
-  s.date = %q{2010-03-05}
+  s.date = %q{2010-03-06}
   s.description = %q{seo_checker check your website if it is seo.}
   s.email = %q{flyerhzm@gmail.com}
   s.executables = ["seo_checker", "seo_checker"]
