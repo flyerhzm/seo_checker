@@ -3,6 +3,7 @@ require 'logger'
 require 'zlib'
 require 'stringio'
 require 'net/http'
+require 'net/https'
 require 'uri'
 
 class SEOException < Exception
@@ -90,6 +91,7 @@ class SEOChecker
   private
     def get_response(uri)
       http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true if uri.scheme == 'https'
       request = Net::HTTP::Get.new(uri.request_uri)
       request["User-Agent"] = "seo-checker"
       response = http.request(request)
