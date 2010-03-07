@@ -29,7 +29,7 @@ It is strongly recommand to check seo in development environment. If you want to
 Usage: seo_checker [OPTIONS] website_url
     -b, --batch BATCH_SIZE           get a batch size of pages
     -i, --interval INTERVAL_TIME     interval time between two batches
-        --debug
+        --debug                      print the page crawling
     -h, --help                       Show this message
 </code></pre>
 

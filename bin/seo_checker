@@ -15,7 +15,7 @@ opts = OptionParser.new do |opts|
     options[:interval_time] = interval
   end
 
-  opts.on('--debug') do
+  opts.on('--debug', 'print the page crawling') do
     options[:logger] = true
   end
 
